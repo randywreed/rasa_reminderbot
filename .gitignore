@@ -1,0 +1,6 @@
+events*
+*.zip
+*.db
+*.pyc
+*.gz
+*.lock

@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "reminderbot"
+version = "0.1.0"
+description = "extrnal events example"
+authors = ["randy reed <reedrw@appstate.edu>"]
+
+[tool.poetry.dependencies]
+python ">=3.7,<3.9"
+rasa = "^2.4.3"
+rasa-x = "^0.38.1"
+spacy = "^3.0.5"
+response = "^0.5.0"
+nest-asyncio = "^1.5.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[[tool.poetry.source]]
+name="rasax"
+url = "https://pypi.rasa.com/simple/"
+secondary=true

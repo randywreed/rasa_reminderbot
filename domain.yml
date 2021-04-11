@@ -1,0 +1,48 @@
+version: '2.0'
+config:
+  store_entities_as_slots: true
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- greet:
+    use_entities: true
+- ask_remind_call:
+    use_entities: true
+- ask_forget_reminders:
+    use_entities: true
+- bye:
+    use_entities: true
+- ask_id:
+    use_entities: true
+- EXTERNAL_dry_plant:
+    use_entities: true
+- EXTERNAL_reminder:
+    use_entities: true
+- EXT_reminder:
+    use_entities: true
+- check_flower:
+    use_entities: true
+entities:
+- PERSON
+- plant
+slots:
+  PERSON:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: false
+responses:
+  utter_what_can_do:
+  - text: What can I do for you?
+  utter_goodbye:
+  - text: Bye
+actions:
+- action_set_reminder
+- action_forget_reminders
+- action_react_to_reminder
+- action_tell_id
+- action_warn_dry
+- action_send_msg
+forms: {}
+e2e_actions: []
