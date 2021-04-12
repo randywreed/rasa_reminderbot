@@ -32,11 +32,18 @@ slots:
     initial_value: null
     auto_fill: true
     influence_conversation: false
+  plant:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: false
 responses:
   utter_what_can_do:
   - text: What can I do for you?
   utter_goodbye:
   - text: Bye
+  utter_plant_warn:
+  - text: your plant needs water
 actions:
 - action_set_reminder
 - action_forget_reminders
@@ -44,5 +51,6 @@ actions:
 - action_tell_id
 - action_warn_dry
 - action_send_msg
+- action_dummy
 forms: {}
 e2e_actions: []

@@ -91,7 +91,7 @@ class ActionSendMessage(Action):
                 
 
     async def main(self,cid=None):
-        asyncio.ensure_future(self.ext_event(cid=cid))
+        asyncio.create_task(self.ext_event(cid=cid))
         return
 
     async def run(
@@ -116,7 +116,19 @@ class ActionSendMessage(Action):
         #         #print(f'url={x.url} data={x.content}')
         return[]
     
+class ActionDummy(Action):
+    """this clears the error"""
     
+    def name(self)->Text:
+        return "action_dummy"
+
+    async def run(
+        self, dispatcher, tracker: Tracker, domain: Dict[Text, Any]
+    ) -> List[Dict[Text, Any]]:
+
+        return []
+
+
 
 
 
@@ -157,8 +169,15 @@ class ActionWarnDry(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        print("in action_warn_dry run")
-        plant = next(tracker.get_latest_entity_values("plant"), "someone")
+        # print("in action_warn_dry run")
+        # for k,v in tracker.current_state().items():
+        #     print(k,v)
+        plant = next(tracker.get_latest_entity_values("plant"))
+        # print(type(plant))
+        # #p=next(plant)
+        print("flower={}".format(plant))
+        # #print("entity=".format(plant))
+        # dispatcher.utter_message(response="utter_plant_warn")
         dispatcher.utter_message(f"Your {plant} needs some water!")
 
         return []
