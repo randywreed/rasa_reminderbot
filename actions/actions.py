@@ -137,22 +137,6 @@ class ActionSendMessage(Action):
         #         #print(f'url={x.url} data={x.content}')
         return[]
     
-class ActionDummy(Action):
-    """this clears the error"""
-    
-    def name(self)->Text:
-        return "action_dummy"
-
-    async def run(
-        self, dispatcher, tracker: Tracker, domain: Dict[Text, Any]
-    ) -> List[Dict[Text, Any]]:
-        try:
-            result=asyncio.gather()
-        except concurrent.Futures_CancelledError:
-            pass
-        return []
-
-
 
 
 
