@@ -71,28 +71,44 @@ class ActionSendMessage(Action):
     def name(self)-> Text:
         return "action_send_msg"
     
-    async def ext_event(self,cid=None): 
-        #async with aiohttp.ClientSession as session:
-            import requests
-            import json
-            await asyncio.sleep(5)
-            headers = {'Content-Type': 'application/json',}
-            params = (('output_channel', 'latest'),)
-            url="http://localhost:5005/conversations/"+cid+"/trigger_intent"
-            d = {"name" : "EXTERNAL_dry_plant", "entities": {"plant": "Orchid"}}
-            print(url,d)
-            try:
-                x=requests.post(url, headers=headers, params=params,data=json.dumps(d),timeout=1)
-            except requests.Timeout:
-                pass
+    # async def ext_event(self,cid=None): 
+    #     #async with aiohttp.ClientSession as session:
+    #         import requests
+    #         import json
+    #         await asyncio.sleep(5)
+    #         headers = {'Content-Type': 'application/json',}
+    #         params = (('output_channel', 'latest'),)
+    #         url="http://localhost:5005/conversations/"+cid+"/trigger_intent"
+    #         d = {"name" : "EXTERNAL_dry_plant", "entities": {"plant": "Orchid"}}
+    #         print(url,d)
+    #         try:
+    #             x=requests.post(url, headers=headers, params=params,data=json.dumps(d),timeout=1)
+    #         except requests.Timeout:
+    #             pass
 
             # async with session.post(url=url,data=d,headers=headers) as resp:
             #     return await resp.text()
                 
-
-    async def main(self,cid=None):
-        asyncio.create_task(self.ext_event(cid=cid))
+    def thread_ext_event(self, cid=None):
+        import requests
+        import json
+        import time
+        print('thread activated')
+        time.sleep(5)
+        headers = {'Content-Type': 'application/json',}
+        params = (('output_channel', 'latest'),)
+        url="http://localhost:5005/conversations/"+cid+"/trigger_intent"
+        d = {"name" : "EXTERNAL_dry_plant", "entities": {"plant": "Orchid"}}
+        print(url,d)
+        x=requests.post(url, headers=headers, params=params,data=json.dumps(d))
+        print(x.status_code)
         return
+            
+
+
+    # async def main(self,cid=None):
+    #     asyncio.create_task(self.ext_event(cid=cid))
+    #     return
 
     async def run(
         self,
@@ -102,8 +118,13 @@ class ActionSendMessage(Action):
         ) -> List[Dict[Text, Any]]:    
         import asyncio
         import aiohttp
+        import multiprocessing as mp
         cid=tracker.sender_id
-        await self.main(cid=cid)
+        #await self.main(cid=cid)
+        
+        t = mp.Process(target=self.thread_ext_event,args=(cid,))
+        #t.daemon = True  # Try commenting this out, running it, and see the difference
+        t.start()
         
         #c="curl -H 'Content-type':'application/json' -XPOST -d '"+d+"' "+url+"?output_channel=latest"
         #os.system(c)
@@ -125,7 +146,10 @@ class ActionDummy(Action):
     async def run(
         self, dispatcher, tracker: Tracker, domain: Dict[Text, Any]
     ) -> List[Dict[Text, Any]]:
-
+        try:
+            result=asyncio.gather()
+        except concurrent.Futures_CancelledError:
+            pass
         return []
 
 
