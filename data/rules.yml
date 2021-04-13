@@ -33,4 +33,5 @@ rules:
 - rule: send external flower
   steps:
   - intent: check_flower
+  - action: utter_wait
   - action: action_send_msg
