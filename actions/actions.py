@@ -94,7 +94,7 @@ class ActionSendMessage(Action):
         import json
         import time
         print('thread activated')
-        time.sleep(5)
+        time.sleep(20)
         headers = {'Content-Type': 'application/json',}
         params = (('output_channel', 'latest'),)
         url="http://localhost:5005/conversations/"+cid+"/trigger_intent"
@@ -116,14 +116,9 @@ class ActionSendMessage(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
         ) -> List[Dict[Text, Any]]:    
-        import asyncio
-        import aiohttp
         import multiprocessing as mp
-        cid=tracker.sender_id
-        #await self.main(cid=cid)
-        
+        cid=tracker.sender_id        
         t = mp.Process(target=self.thread_ext_event,args=(cid,))
-        #t.daemon = True  # Try commenting this out, running it, and see the difference
         t.start()
         
         #c="curl -H 'Content-type':'application/json' -XPOST -d '"+d+"' "+url+"?output_channel=latest"
