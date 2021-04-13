@@ -24,8 +24,7 @@ rules:
   steps:
   - intent: EXTERNAL_dry_plant
   - slot_was_set:
-    - plant
-  - action: action_dummy
+    - plant: filled
   - action: action_warn_dry
 - rule: react to reminder
   steps:

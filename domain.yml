@@ -51,6 +51,5 @@ actions:
 - action_tell_id
 - action_warn_dry
 - action_send_msg
-- action_dummy
 forms: {}
 e2e_actions: []
