@@ -102,7 +102,7 @@ class ActionSendMessage(Action):
         ) -> List[Dict[Text, Any]]:    
         import multiprocessing as mp
         cid=tracker.sender_id
-        t=mp.Process(self.ext_event,args=(cid,))
+        t=mp.Process(target=self.ext_event,args=(cid,))
         t.start()
         
         #c="curl -H 'Content-type':'application/json' -XPOST -d '"+d+"' "+url+"?output_channel=latest"
