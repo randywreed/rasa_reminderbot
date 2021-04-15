@@ -15,11 +15,10 @@ jobs:
       uses: actions/checkout@v2
     - name: get current date
       id: date
-      run: echo "::set-output name=date::$(date +'%b-%d-%Y-%H-%M')"
-      
+      run: echo "::set-output name=date::$(date +'%b-%d-%Y-%H-%M')"    
     - id: action_server
-      - name: Build Action Server image
-        uses: RasaHQ/rasa-action-server-gha@v1.0.3
+      name: Build Action Server image
+      uses: RasaHQ/rasa-action-server-gha@v1.0.3
 
       # Full list of parameters: https://github.com/RasaHQ/action-server-gha/tree/master#input-arguments
       with:
