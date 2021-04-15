@@ -107,13 +107,14 @@ class ActionSendMessage(Action):
         
         #c="curl -H 'Content-type':'application/json' -XPOST -d '"+d+"' "+url+"?output_channel=latest"
         #os.system(c)
-        
+         
         #x=requests.request("POST", url, headers=headers, params=params,data=json.dumps(d))
         # async with aiohttp.ClientSession() as session:
         #     async with session.post(url,data=json.dumps(d)) as resp:
         #         #print(resp.status)
         #         #print(await resp.text())
         #         #print(f'url={x.url} data={x.content}')
+        
         return[]
     
 class ActionDummy(Action):
