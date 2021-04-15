@@ -11,7 +11,6 @@
 from typing import Any, Text, Dict, List
 import datetime
 import asyncio
-import aiohttp
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.events import ReminderScheduled, ReminderCancelled
