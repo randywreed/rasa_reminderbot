@@ -116,10 +116,26 @@ class ActionSendMessage(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
         ) -> List[Dict[Text, Any]]:    
-        import multiprocessing as mp
-        cid=tracker.sender_id        
-        t = mp.Process(target=self.thread_ext_event,args=(cid,))
-        t.start()
+        import asyncio
+        import aiohttp
+        cid=tracker.sender_id
+        #await self.main(cid=cid)
+        async with aiohttp.ClientSession as session:
+            import requests
+            import json
+            #await asyncio.sleep(5)
+            headers = {'Content-Type': 'application/json',}
+            params = (('output_channel', 'latest'),)
+            url="http://localhost:5005/conversations/"+cid+"/trigger_intent"
+            d = {"name" : "EXTERNAL_dry_plant", "entities": {"plant": "Orchid"}}
+            print(url,d)
+            # try:
+            #     x=requests.post(url, headers=headers, params=params,data=json.dumps(d),timeout=1)
+            # except requests.Timeout:
+            #     pass
+
+            async with session.post(url=url,data=d,headers=headers) as resp:
+                print (resp.status)
         
         #c="curl -H 'Content-type':'application/json' -XPOST -d '"+d+"' "+url+"?output_channel=latest"
         #os.system(c)
