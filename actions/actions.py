@@ -102,8 +102,10 @@ class ActionSendMessage(Action):
         ) -> List[Dict[Text, Any]]:    
         import asyncio
         import aiohttp
+        import multiprocessing as mp
         cid=tracker.sender_id
-        await self.main(cid=cid)
+        t=mp.Process(self.ext_event,args=(cid,))
+        t.start()
         
         #c="curl -H 'Content-type':'application/json' -XPOST -d '"+d+"' "+url+"?output_channel=latest"
         #os.system(c)
