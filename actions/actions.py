@@ -71,11 +71,12 @@ class ActionSendMessage(Action):
     def name(self)-> Text:
         return "action_send_msg"
     
-    async def ext_event(self,cid=None): 
+    def ext_event(self,cid=None): 
         #async with aiohttp.ClientSession as session:
             import requests
             import json
-            await asyncio.sleep(5)
+            import time
+            time.sleep(5)
             headers = {'Content-Type': 'application/json',}
             params = (('output_channel', 'latest'),)
             url="http://localhost:5005/conversations/"+cid+"/trigger_intent"
@@ -100,8 +101,6 @@ class ActionSendMessage(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
         ) -> List[Dict[Text, Any]]:    
-        import asyncio
-        import aiohttp
         import multiprocessing as mp
         cid=tracker.sender_id
         t=mp.Process(self.ext_event,args=(cid,))
