@@ -78,7 +78,7 @@ class ActionSendMessage(Action):
             time.sleep(5)
             headers = {'Content-Type': 'application/json',}
             params = (('output_channel', 'latest'),)
-            url="http://rasa-x:5002/conversations/"+cid+"/trigger_intent"
+            url="http://localhost:5005/conversations/"+cid+"/trigger_intent"
             d = {"name" : "EXTERNAL_dry_plant", "entities": {"plant": "Orchid"}}
             print(url,d)
             try:
