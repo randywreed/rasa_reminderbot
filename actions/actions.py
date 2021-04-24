@@ -86,7 +86,7 @@ class ActionSendMessage(Action):
             headers = {'Content-Type': 'application/json',}
             params = (('output_channel', 'latest'),
             ('token',token))
-            url="http://localhost/core/conversations/"+cid+"/trigger_intent"
+            url="http://nginx:8080/core/conversations/"+cid+"/trigger_intent"
             d = {"name" : "EXTERNAL_dry_plant", "entities": {"plant": "Orchid"}}
             print(url,d)
             try:
