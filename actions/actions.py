@@ -70,21 +70,15 @@ class ActionSendMessage(Action):
     def name(self)-> Text:
         return "action_send_msg"
     
-    def get_access_token(self,tracker:Tracker=None):
-        for event in reversed(tracker.events_after_latest_restart()):
-            print(f'event={event}')
-            if event.get('event')=='user' and 'metadata' in event:
-                print(f'found event')
-                access_token=event.get('metadata')
-                print(f'access token={access_token}')
-                return access_token
 
     def ext_event(self,cid=None,token=None): 
         #async with aiohttp.ClientSession as session:
             import requests
             import json
             import time
+            import os
             time.sleep(5)
+            token=os.getenv('RASA_TOKEN')
             headers = {'Content-Type': 'application/json',}
             params = (('output_channel', 'latest'),
             ('token',token))
