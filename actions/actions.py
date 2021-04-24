@@ -70,14 +70,21 @@ class ActionSendMessage(Action):
     def name(self)-> Text:
         return "action_send_msg"
     
-    def ext_event(self,cid=None): 
+    def get_access_token(tracker:Tracker):
+        for event in reversed(tracker.events_after_latest_restart()):
+            if event.get('event')=='user' and 'metadata' in event:
+                access_token=event.get('metadata')
+                return access_token
+
+    def ext_event(self,cid=None,token=None): 
         #async with aiohttp.ClientSession as session:
             import requests
             import json
             import time
             time.sleep(5)
             headers = {'Content-Type': 'application/json',}
-            params = (('output_channel', 'latest'),)
+            params = (('output_channel', 'latest'),
+            ('token',token))
             url="http://localhost/core/conversations/"+cid+"/trigger_intent"
             d = {"name" : "EXTERNAL_dry_plant", "entities": {"plant": "Orchid"}}
             print(url,d)
@@ -101,8 +108,9 @@ class ActionSendMessage(Action):
         domain: Dict[Text, Any],
         ) -> List[Dict[Text, Any]]:    
         import multiprocessing as mp
+        access_token=self.get_access_token(tracker)
         cid=tracker.sender_id
-        t=mp.Process(target=self.ext_event,args=(cid,))
+        t=mp.Process(target=self.ext_event,args=(cid,access_token))
         t.start()
         
         #c="curl -H 'Content-type':'application/json' -XPOST -d '"+d+"' "+url+"?output_channel=latest"
