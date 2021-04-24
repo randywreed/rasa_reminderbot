@@ -74,6 +74,7 @@ class ActionSendMessage(Action):
         for event in reversed(tracker.events_after_latest_restart()):
             if event.get('event')=='user' and 'metadata' in event:
                 access_token=event.get('metadata')
+                print(f'access token={access_token}')
                 return access_token
 
     def ext_event(self,cid=None,token=None): 
