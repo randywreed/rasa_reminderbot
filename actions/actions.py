@@ -70,7 +70,7 @@ class ActionSendMessage(Action):
     def name(self)-> Text:
         return "action_send_msg"
     
-    def get_access_token(tracker:Tracker=None):
+    def get_access_token(self,tracker:Tracker=None):
         for event in reversed(tracker.events_after_latest_restart()):
             if event.get('event')=='user' and 'metadata' in event:
                 access_token=event.get('metadata')
