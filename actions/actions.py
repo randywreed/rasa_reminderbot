@@ -76,9 +76,7 @@ class ActionSendMessage(Action):
             import requests
             import json
             import time
-            import os
             time.sleep(5)
-            token=os.getenv('RASA_TOKEN')
             headers = {'Content-Type': 'application/json',}
             params = (('output_channel', 'latest'),
             ('token',token))
@@ -105,7 +103,9 @@ class ActionSendMessage(Action):
         domain: Dict[Text, Any],
         ) -> List[Dict[Text, Any]]:    
         import multiprocessing as mp
-        access_token=self.get_access_token(tracker)
+        import os
+        access_token=os.getenv('RASA_TOKEN')
+
         cid=tracker.sender_id
         t=mp.Process(target=self.ext_event,args=(cid,access_token))
         t.start()
