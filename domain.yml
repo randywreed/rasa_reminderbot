@@ -44,6 +44,8 @@ responses:
   - text: Bye
   utter_plant_warn:
   - text: your plant needs water
+  utter_please_wait:
+  - text: This may take some time. Please wait.
 actions:
 - action_set_reminder
 - action_forget_reminders
